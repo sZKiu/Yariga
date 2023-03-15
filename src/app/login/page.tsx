@@ -87,7 +87,7 @@ function Login() {
     password: string;
   }) => {
     const fetchDataJson = await fetch(
-      `https://apiexpressuser-2-k8787246.deta.app/api/v1/auth/login`,
+      `https://apiexpressuser-3-k8787246.deta.app/api/v1/auth/login`,
       {
         method: "POST",
         body: JSON.stringify({

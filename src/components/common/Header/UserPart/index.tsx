@@ -65,7 +65,7 @@ function UserPart({
                   className="font-semibold text-white text-[15px] flex items-center justify-center gap-2 py-0.5 transition-colors hover:bg-[#4e767c]"
                   onClick={async () => {
                     const res = await fetch(
-                      "https://apiexpressuser-2-k8787246.deta.app/api/v1/auth/logout",
+                      "https://apiexpressuser-3-k8787246.deta.app/api/v1/auth/logout",
                       {
                         credentials: "include",
                         headers: {
@@ -73,7 +73,7 @@ function UserPart({
                         },
                       }
                     );
-                    router.push("/");
+                    location.reload();
                   }}
                 >
                   Log Out

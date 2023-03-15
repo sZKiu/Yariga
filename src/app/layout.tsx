@@ -10,7 +10,7 @@ async function getMeInfo() {
   const refreshToken = cookieStore.get("refreshToken");
 
   const meInfo = await fetch(
-    "https://apiexpressuser-2-k8787246.deta.app/api/v1/auth/me",
+    "https://apiexpressuser-3-k8787246.deta.app/api/v1/auth/me",
     {
       credentials: "include",
       headers: {

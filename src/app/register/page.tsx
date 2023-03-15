@@ -156,7 +156,7 @@ function Login() {
       fetchData = await fetchDataJson.json();
     } else {
       fetchDataJson = await fetch(
-        `https://apiexpressuser-2-k8787246.deta.app/api/v1/auth/register`,
+        `https://apiexpressuser-3-k8787246.deta.app/api/v1/auth/register`,
         {
           method: "POST",
           body: JSON.stringify({
