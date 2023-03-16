@@ -1,1 +1,1 @@
-export const Envs = { API_URL: process.env.NEXT_PUBLIC_SERVER_API ?? "" };
+export const Envs = { API_URL: "https://apiexpressuser-1-k8787246.deta.app" };
