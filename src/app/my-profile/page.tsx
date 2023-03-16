@@ -1,14 +1,18 @@
-"use client";
 import MyProfileMain from "@/components/myprofile/MyProfileMain";
-// import { Provider } from "react-redux";
-// import store from "../../redux/store/store";
+import Icon from "../../assets/logo.svg"
+
+export const metadata = {
+  title: 'My Profile',
+  description: 'Welcome to Yariga',
+  siteName: "Yariga",
+  type: 'website',
+  icons: {
+    icon: { url: Icon.src, type: 'image/svg' },
+  },
+};
 
 function MyProfile() {
-  return (
-    // <Provider store={store}>
-      <MyProfileMain/>
-    // </Provider>
-  );
+  return <MyProfileMain />;
 }
 
 export default MyProfile;

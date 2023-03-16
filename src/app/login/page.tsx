@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import CustomInput from "@/components/common/CustomInput";
 import { Formik, ErrorMessage, Field, Form } from "formik";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
+import { Envs } from "@/constants";
 import * as Yup from "yup";
 
 const validationSchema = Yup.object().shape({
@@ -87,7 +88,7 @@ function Login() {
     password: string;
   }) => {
     const fetchDataJson = await fetch(
-      `https://apiexpressuser-3-k8787246.deta.app/api/v1/auth/login`,
+      `${Envs.API_URL}/api/v1/auth/login`,
       {
         method: "POST",
         body: JSON.stringify({
@@ -98,6 +99,7 @@ function Login() {
           "Content-Type": "application/json",
         },
         credentials: "include",
+        mode: "cors"
       }
     );
     const fetchData = await fetchDataJson.json();

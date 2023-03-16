@@ -2,35 +2,26 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { setUser } from "../../../../redux/slices/userSlice";
-import { useDispatch } from "react-redux/es/exports";
 import { BiLogOut, BiTrash, BiHeart } from "react-icons/bi";
 import Unknown from "../../../../assets/unknown-user.png";
+import { Envs } from "@/constants";
 
 function UserPart({
-  meInfo,
+  meInfo: {
+    uniqueName, username, email, image, age, error
+  },
 }: {
   meInfo: {
     uniqueName: string;
     username: string;
     email: string;
-    img: string | null;
+    image: string | null;
     age: string | null;
     error: string | null;
   };
 }) {
-  const dispatch = useDispatch();
   const router = useRouter();
-  const { uniqueName, username, email, img, age, error } = meInfo;
   const [showOptions, setShowOptions] = useState(false);
-
-  useEffect(() => {
-    dispatch(
-      setUser({
-        ...meInfo,
-      })
-    );
-  }, []);
 
   return (
     <>
@@ -39,7 +30,7 @@ function UserPart({
           <button onClick={() => setShowOptions(!showOptions)}>
             <img
               className="rounded-full w-[2.5rem] h-[2.5rem]"
-              src={img ? img : Unknown.src}
+              src={image ? image : Unknown.src}
               alt="User Image"
             />
           </button>
@@ -65,12 +56,13 @@ function UserPart({
                   className="font-semibold text-white text-[15px] flex items-center justify-center gap-2 py-0.5 transition-colors hover:bg-[#4e767c]"
                   onClick={async () => {
                     const res = await fetch(
-                      "https://apiexpressuser-3-k8787246.deta.app/api/v1/auth/logout",
+                      `${Envs.API_URL}/api/v1/auth/logout`,
                       {
                         credentials: "include",
                         headers: {
                           "content-type": "application/json",
                         },
+                        mode: "cors",
                       }
                     );
                     location.reload();
@@ -121,4 +113,3 @@ function UserPart({
 }
 
 export default UserPart;
-

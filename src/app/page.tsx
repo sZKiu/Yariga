@@ -1,4 +1,15 @@
 import Main from "../components/dashboard/Main";
+import Icon from "../assets/logo.svg"
+
+export const metadata = {
+  title: 'Yariga',
+  description: 'Welcome to Yariga',
+  siteName: "Yariga",
+  type: 'website',
+  icons: {
+    icon: { url: Icon.src, type: 'image/svg' },
+  },
+};
 
 export default function Home() {
   return (

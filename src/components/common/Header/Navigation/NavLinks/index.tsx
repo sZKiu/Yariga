@@ -1,7 +1,8 @@
 "use client";
 import React, { ReactElement, useRef } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { Envs } from "@/constants";
 import { IconType } from "react-icons/lib";
 
 function NavLinks({
@@ -91,12 +92,13 @@ function NavLinks({
           className={`flex gap-3 items-center text-gray-600 hover:bg-gray-100/90 transition-colors duration-300 py-3 px-6 rounded-xl w-full h-full`}
           onClick={async () => {
             const res = await fetch(
-              "https://apiexpressuser-3-k8787246.deta.app/api/v1/auth/logout",
+              `${Envs.API_URL}/api/v1/auth/logout`,
               {
                 credentials: "include",
                 headers: {
                   "content-type": "application/json",
                 },
+                mode: "cors",
               }
             );
             location.reload();

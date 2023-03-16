@@ -1,49 +1,30 @@
+"use client";
 import "./globals.css";
 import Header from "../components/common/Header";
 import Navigation from "@/components/common/Header/Navigation";
 import AlertDelAcc from "../components/common/AlertDeleteAcc";
-import { cookies } from "next/headers";
-import { UserwPassword } from "@/interfaces/interfaces";
+import { Provider } from "react-redux";
+import store from "../redux/store/store";
 
-async function getMeInfo() {
-  const cookieStore = cookies();
-  const refreshToken = cookieStore.get("refreshToken");
-
-  const meInfo = await fetch(
-    "http://localhost:5050/api/v1/auth/me",
-    {
-      credentials: "include",
-      headers: {
-        "content-type": "application/json",
-        refreshtoken: refreshToken ? refreshToken.value : "",
-      },
-      cache: "no-store",
-    }
-  );
-
-  return await meInfo.json();
-}
-
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const meInfo: UserwPassword = await getMeInfo();
-
   return (
     <html lang="en">
       <body className="font-[Roboto]">
-        {/* @ts-ignore */}
-        <Header meInfo={meInfo} />
+        <Provider store={store}>
+          <Header />
 
-        <main className="flex">
-          <Navigation showAll={Boolean(meInfo)} />
+          <main className="flex">
+            <Navigation showAll={true} />
 
-          {children}
-        </main>
+            {children}
+          </main>
 
-        <footer></footer>
+          <footer></footer>
+        </Provider>
 
         <AlertDelAcc />
       </body>

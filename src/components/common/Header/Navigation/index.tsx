@@ -1,12 +1,15 @@
 import React from "react";
 import Link from "next/link";
 import NavLinks from "./NavLinks";
+import { useSelector } from "react-redux";
 import { MdDashboard } from "react-icons/md";
 import { TbBuildingSkyscraper, TbUsers, TbLogout } from "react-icons/tb";
 import { CgProfile } from "react-icons/cg";
 import { IconType } from "react-icons/lib";
 
 function Navigation({ showAll }: { showAll: boolean }) {
+  const user = useSelector((state: any) => state.user);
+
   const options = [
     {
       icon: MdDashboard,
@@ -35,7 +38,7 @@ function Navigation({ showAll }: { showAll: boolean }) {
     },
   ];
 
-  if (!showAll) {
+  if (!user.uniqueName) {
     options.pop();
     options.pop();
   }

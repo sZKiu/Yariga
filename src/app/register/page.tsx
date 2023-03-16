@@ -6,6 +6,7 @@ import CustomInput from "@/components/common/CustomInput";
 import { Formik, ErrorMessage, Field, Form } from "formik";
 import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { ClipLoader } from "react-spinners";
+import { Envs } from "@/constants";
 import * as Yup from "yup";
 
 const validationSchema = Yup.object().shape({
@@ -42,9 +43,10 @@ const validationSchema = Yup.object().shape({
     .email("Write a valid email")
     .test(
       "email",
-      () => "Email only allows lowercase letters",
+      () => "Email only allows lowercase letters and numbers",
       (value) => {
-        if (!/^[a-z]+\@[^\s]+\.[^\s]+$/.test(value)) return false;
+        const newValue = value.split("@")[0];
+        if (!/^[a-zA-Z0-9_.-]*$/.test(newValue)) return false;
 
         return true;
       }
@@ -98,7 +100,7 @@ function Login() {
   const router = useRouter();
   const [user, setUser] = useState<{ email: string; username: string }>();
   const [showPass, setShowPass] = useState(false);
-  const [img, setImg] = useState<string | null>(null);
+  const [image, setImg] = useState<string | null>(null);
   const [error, setError] = useState<any>();
   const [showMessa, setShowMessa] = useState(false);
   const [finished, setFinished] = useState(false);
@@ -131,47 +133,52 @@ function Login() {
     age: string;
     password: string;
   }) => {
+    console.log({
+      uniqueName,
+      username,
+      email,
+      age,
+      password,
+      image,
+    });
+
     let fetchData;
     let fetchDataJson;
 
     if (age) {
-      fetchDataJson = await fetch(
-        `https://apiexpressuser-1-k8787246.deta.app/api/v1/auth/register`,
-        {
-          method: "POST",
-          body: JSON.stringify({
-            uniqueName,
-            username,
-            email,
-            age,
-            password,
-            img,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        }
-      );
+      fetchDataJson = await fetch(`${Envs.API_URL}/api/v1/auth/register`, {
+        method: "POST",
+        body: JSON.stringify({
+          uniqueName,
+          username,
+          email,
+          age,
+          password,
+          image,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        mode: "cors",
+      });
       fetchData = await fetchDataJson.json();
     } else {
-      fetchDataJson = await fetch(
-        `https://apiexpressuser-3-k8787246.deta.app/api/v1/auth/register`,
-        {
-          method: "POST",
-          body: JSON.stringify({
-            uniqueName,
-            username,
-            email,
-            password,
-            img,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        }
-      );
+      fetchDataJson = await fetch(`${Envs.API_URL}/api/v1/auth/register`, {
+        method: "POST",
+        body: JSON.stringify({
+          uniqueName,
+          username,
+          email,
+          password,
+          image,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        mode: "cors",
+      });
       fetchData = await fetchDataJson.json();
     }
 
@@ -307,7 +314,7 @@ function Login() {
                   <button
                     type="button"
                     className={`w-fit relative underline-offset-1 underline transition-colors hover:text-gray-500 duration-300 ${
-                      img ? "text-green-600" : ""
+                      image ? "text-green-600" : ""
                     }`}
                     onClick={(
                       e: React.MouseEvent<HTMLButtonElement, MouseEvent>

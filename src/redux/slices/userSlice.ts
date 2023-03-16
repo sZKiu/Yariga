@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { User } from "@/interfaces/interfaces";
+import { User, UserwError } from "@/interfaces/interfaces";
 
 interface Action {
-  payload: User;
+  payload: UserwError;
   type: string;
 }
 
-const initialState: User | {} = {};
+const initialState: UserwError | {} = {};
 
 export const userSlice = createSlice({
   name: "userSlice",
@@ -16,15 +16,16 @@ export const userSlice = createSlice({
   reducers: {
     setUser: (
       state,
-      { payload: { uniqueName, username, email, age, img } }: Action
+      { payload: { uniqueName, username, email, age, image, error } }: Action
     ) => {
       return {
         ...state,
         uniqueName,
         username,
         email,
-        img,
+        image,
         age,
+        error,
       };
     },
   },
