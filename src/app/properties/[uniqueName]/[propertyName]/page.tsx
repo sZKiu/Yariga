@@ -65,7 +65,7 @@ export default async function PropertyName({
 
           <div className="flex justify-between">
             <p className="text-lg text-gray-900">
-              {type.slice(0, 1).toUpperCase() + type.slice(1)}
+              {type?.slice(0, 1)?.toUpperCase() + type?.slice(1)}
             </p>
 
             <div className="flex text-lg gap-0.5 text-orange-500">
