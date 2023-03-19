@@ -7,7 +7,7 @@ async function getAgents() {
     `${Envs.API_URL}/api/v1/properties/agents?page=0`,
     {
       mode: "cors",
-      next: { revalidate: 36000 },
+      cache: "no-store",
     }
   );
 
