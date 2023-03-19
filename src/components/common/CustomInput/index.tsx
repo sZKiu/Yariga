@@ -13,7 +13,7 @@ export default function CustomInput({
   field: any;
   required: any;
   variant: "standard" | "outlined";
-  className: string;
+  className: string | undefined;
 }) {
   return (
     <Input

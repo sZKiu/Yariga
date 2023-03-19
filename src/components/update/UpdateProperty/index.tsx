@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import CustomSelect from "@/components/common/CustomSelect";
 import CustomInput from "@/components/common/CustomInput";
 import CustomTextArea from "@/components/common/CustomTextArea";
@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Envs } from "@/constants";
 import { useSelector } from "react-redux";
 import { Formik, ErrorMessage, Field, Form } from "formik";
+import { Property } from "@/interfaces/interfaces";
 import * as Yup from "yup";
 
 const SignupSchema = Yup.object().shape({
@@ -38,8 +39,9 @@ interface Values {
   location: string;
 }
 
-function CreateProperty() {
+function UpdateProperty({ propertyId }: { propertyId: string }) {
   const user = useSelector((state: any) => state.user);
+  const [dataProp, setDataProp] = useState<Property>();
   const [img, setImg] = useState("");
   const [imgName, setImgName] = useState("");
   const [type, setType] = useState("");
@@ -48,16 +50,32 @@ function CreateProperty() {
   const [error, setError] = useState<any>();
   const [showMessa, setShowMessa] = useState(false);
 
+  useEffect(() => {
+    (async function () {
+      const res = await fetch(
+        `${Envs.API_URL}/api/v1/properties/property/${propertyId}`
+      );
+
+      const json = await res.json();
+
+      setDataProp(json.property);
+
+      setImg(json.property.image);
+
+      setType(json.property.type);
+    })();
+  }, []);
+
   const onSubmit = async (values: Values) => {
     const fetchDataJson = await fetch(
-      `${Envs.API_URL}/api/v1/properties/create`,
+      `${Envs.API_URL}/api/v1/properties/update/${propertyId}`,
       {
-        method: "POST",
+        method: "PUT",
         body: JSON.stringify({
           ...values,
+          price: Number(values.price),
           image: img,
           type,
-          authorUniqueName: user.uniqueName,
         }),
         headers: {
           "Content-Type": "application/json",
@@ -86,7 +104,6 @@ function CreateProperty() {
 
       setTimeout(() => {
         setShowMessa(false);
-
         setError(undefined);
       }, 2000);
     }
@@ -98,13 +115,14 @@ function CreateProperty() {
 
       <Formik
         initialValues={{
-          name: "",
-          description: "",
-          price: "",
-          location: "",
+          name: dataProp?.name ? dataProp?.name : "",
+          description: dataProp?.description ? dataProp?.description : "",
+          price: dataProp?.price ? dataProp?.price.toString() : "",
+          location: dataProp?.location ? dataProp?.location : "",
         }}
         validationSchema={SignupSchema}
         onSubmit={onSubmit}
+        enableReinitialize
       >
         {() => {
           return (
@@ -156,6 +174,7 @@ function CreateProperty() {
                       component={CustomSelect}
                       setType={setType}
                       showAll={false}
+                      type={type}
                     />
 
                     {showTypeErrors ? (
@@ -315,4 +334,4 @@ function CreateProperty() {
   );
 }
 
-export default CreateProperty;
+export default UpdateProperty;

@@ -27,6 +27,8 @@ export default function RootLayout({
         </Provider>
 
         <AlertDelAcc />
+
+        <a href="/" id="anchor-to-home" />
       </body>
     </html>
   );

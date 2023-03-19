@@ -36,8 +36,8 @@ function UserPart({
           </button>
 
           {showOptions ? (
-            <div className="absolute left-[50%] -translate-x-[70%]  bg-[#413ca9] rounded-xl shadow-lg shadow-black/20 py-3">
-              <div className="flex flex-col items-center gap-2 px-6">
+            <div className="absolute left-[50%] -translate-x-[85%]  bg-[#413ca9] rounded-xl shadow-lg shadow-black/20 py-3">
+              <div className="flex flex-col items-center gap-2 px-10">
                 <h3 className="font-semibold text-xl text-[#90bbff] w-max">
                   <span className="text-white">Hello</span> {username}
                 </h3>
@@ -46,7 +46,7 @@ function UserPart({
               <div className="flex flex-col mt-2 gap-2">
                 <Link
                   className="font-semibold text-white text-[15px] flex items-center justify-center gap-2 py-0.5 transition-colors hover:bg-[#4e767c]"
-                  href="/user"
+                  href="/my-profile/my-properties"
                 >
                   My Properties
                   <BiHeart className="text-white text-lg" />
@@ -65,7 +65,7 @@ function UserPart({
                         mode: "cors",
                       }
                     );
-                    location.reload();
+                    document.getElementById("anchor-to-home")?.click();
                   }}
                 >
                   Log Out

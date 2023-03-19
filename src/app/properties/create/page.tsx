@@ -1,5 +1,15 @@
-"use client";
 import CreateProperty from "@/components/properties/CreateProperty";
+import Icon from "../../../assets/logo.svg"
+
+export const metadata = {
+  title: 'Create Property',
+  description: 'Welcome to Yariga',
+  siteName: "Yariga",
+  type: 'website',
+  icons: {
+    icon: { url: Icon.src, type: 'image/svg' },
+  },
+};
 
 function CreatePropertyPage() {
   return (

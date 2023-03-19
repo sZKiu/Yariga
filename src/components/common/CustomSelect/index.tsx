@@ -2,8 +2,22 @@
 import { Select, Option } from "@material-tailwind/react";
 import React, { Ref, useState } from "react";
 
-function CustomSelect({ setType }: { setType: (x: string) => void }) {
+function CustomSelect({
+  setType,
+  showAll,
+  label,
+  type,
+}: {
+  setType: (x: string) => void;
+  showAll: boolean;
+  label: string;
+  type?: string;
+}) {
   const options = [
+    {
+      value: "all",
+      name: "All",
+    },
     {
       value: "apartment",
       name: "Apartment",
@@ -38,13 +52,17 @@ function CustomSelect({ setType }: { setType: (x: string) => void }) {
     },
   ];
 
+  if (!showAll) options.shift();
+
   return (
     <div className="flex flex-col w-full gap-6 h-[38px]">
       <Select
-        label="Select Type Property"
+        label={label}
         variant="outlined"
         color="indigo"
         size="md"
+        value={type ? type : undefined}
+        onChange={() => {}}
       >
         {options.map(({ value, name }, i) => {
           return (

@@ -1,5 +1,6 @@
 "use client";
 import React, { useRef, LegacyRef } from "react";
+import { Envs } from "@/constants";
 
 export default function AlertDelAcc() {
   const alertDelAcc: LegacyRef<HTMLDivElement> = useRef(null);
@@ -36,16 +37,15 @@ export default function AlertDelAcc() {
         <button
           className="flex items-center transition-colors duration-300 py-1.5 px-4 rounded-xl bg-red-600 hover:bg-red-900 text-white"
           onClick={async () => {
-            const res = await fetch(
-              "https://apiexpressuser-2-k8787246.deta.app/api/v1/auth/user",
-              {
-                credentials: "include",
-                headers: {
-                  "content-type": "application/json",
-                },
-              }
-            );
-            location.reload();
+            const res = await fetch(`${Envs.API_URL}/api/v1/auth/user`, {
+              credentials: "include",
+              method: "DELETE",
+              headers: {
+                "content-type": "application/json",
+              },
+            });
+
+            document.getElementById("anchor-to-home")?.click();
           }}
         >
           Delete Account
